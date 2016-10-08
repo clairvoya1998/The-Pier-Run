@@ -94,14 +94,14 @@ public class Pier {
     private void gameOver(Graphics2D g, long score) {
 		Font gameOverFont = new Font("Sans-Serif",1,70);
 		g.setFont(gameOverFont);
-		g.drawString("GAME OVER", 270, 200);
+		g.drawString("GAME OVER", 150, 100);
 		Font scoreFont = new Font("Sans-Serif",1,40);
 		g.setFont(scoreFont);
 		score-=1;
-		g.drawString("Your score was: "+score, 270, 300);
+		g.drawString("Your score was: "+score, 160, 200);
 		Font optionsFont = new Font("Sans-Serif",1,20);
 		g.setFont(optionsFont);
-		g.drawString("Do you want to play again? Y/N", 330, 400);
+		g.drawString("Do you want to play again? Y/N", 210, 270);
 		
 	}
     
