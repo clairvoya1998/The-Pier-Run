@@ -20,7 +20,7 @@ public class Pier extends Sprite {
     private int y;
     private boolean dead = false;
     private ArrayList<Golf> golfs;
-    private Image image1, image2;
+    private Image image1, image2, tourist;
     
     public Pier(int x, int y) {
         super(x,y);
@@ -33,6 +33,8 @@ public class Pier extends Sprite {
 		image1 = i1.getImage().getScaledInstance((int)HEIGHT/8, (int)RATIO*HEIGHT/8, Image.SCALE_DEFAULT);
 		ImageIcon i2 = new ImageIcon("run.png");
 		image2 = i2.getImage().getScaledInstance((int)HEIGHT/8, (int)RATIO*HEIGHT/8, Image.SCALE_DEFAULT);
+		ImageIcon i3 = new ImageIcon("tourist.png");
+		tourist = i3.getImage().getScaledInstance((int)HEIGHT/6, (int)(HEIGHT*(883/549)/6), Image.SCALE_DEFAULT);
 		x = XPOS;
 		y = YPOS;
     }
@@ -71,6 +73,15 @@ public class Pier extends Sprite {
     		if(y <= 140) {
     			dy = 0;
     		}
+    		/*for (int i = 0; i < 5; i++) {
+    			obx[i] -= 8;
+    			while (obx[i] < 0) {
+    				obx[i] += WIDTH + randInt(0, 3*WIDTH);
+    				for (int j = 0; j < 5; j++) {
+    					while (Math.abs(obx[i] - obx[j]) < 200 && i != j) obx[i] += 350;
+    				}
+    			}
+    		}*/
     		for (int i = 0; i < 5; i++) {
     			obx[i] -= 8;
     			while (obx[i] < 0) {
@@ -80,8 +91,10 @@ public class Pier extends Sprite {
     				}
     			}
     		}
+    		
         	for (int i = 0; i < 5; i++) {
-        		if (obx[i] < WIDTH) g2d.drawRect(obx[i], HEIGHT/2-50, 50, 50);
+        		//if (obx[i] < WIDTH) g2d.drawRect(obx[i], HEIGHT/2-50, 50, 50);
+        		if (obx[i] < WIDTH) g2d.drawImage(this.tourist, obx[i], HEIGHT/2 - HEIGHT/6, null);
         	}
         	g2d.drawLine(0, HEIGHT/2, WIDTH, HEIGHT/2);
         	y = Math.min(y,YPOS);
