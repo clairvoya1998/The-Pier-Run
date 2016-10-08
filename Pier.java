@@ -12,7 +12,7 @@ public class Pier {
     private int dy;
     private int x;
     private int y;
-    private int dead = false;
+    private boolean dead = false;
     private Image image;
     
     public Pier() {
