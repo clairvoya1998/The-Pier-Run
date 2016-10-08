@@ -3,6 +3,8 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.Timer;
 import java.awt.Graphics2D;
+import java.util.Random;
+import java.lang.Math;
 
 public class Pier {
     private final float GRAVITY = 9f;
@@ -38,10 +40,16 @@ public class Pier {
         return y;
     }
 
-    public Image getImage() {
+    public Image getImage() { 
         return image;
     }
-
+    private static int randInt(int min, int max) {
+        Random rand = new Random();
+        return rand.nextInt((max - min) + 1) + min;
+    }
+    private int[] obx = {
+        1200, 1600, 2000, 2400, 2800
+    };
     public void drawOn(Graphics2D g2d) {
         y += GRAVITY;
         y += dy;
@@ -49,7 +57,19 @@ public class Pier {
         if(y <= 140) {
           dy = 0;
         }
-
+        for (int i = 0; i < 5; i++) {
+            obx[i] -= 8;
+            while (obx[i] < 0) {
+                obx[i] += 1000 + randInt(0, 3000);
+                for (int j = 0; j < 5; j++) {
+                    while (Math.abs(obx[i] - obx[j]) < 200 && i != j) obx[i] += 250;
+                }
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            if (obx[i] < 1000) g2d.drawRect(obx[i], 270, 50, 50);
+        }
+        g2d.drawLine(0, 320, 1000, 320);
         y = Math.min(y,260);
 
         g2d.drawImage(this.image, this.x, this.y, null);
