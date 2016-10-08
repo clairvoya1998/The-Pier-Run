@@ -7,6 +7,8 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import javax.imageio.*; 
 import java.io.*;
+import java.util.Random;
+import java.lang.Math;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -108,20 +110,33 @@ public class PierRun implements Runnable{
 		} catch (IOException e) {
 		}
 	}
-    private int x = 1000;
+    private int[] x = {1200, 1600, 2000};
 	protected void update(int deltaTime){
    	   score++;
-   	   x -= deltaTime * 0.2;
-   	   while(x < 0){
-   	   	   	x += 1000;
+   	   for (int i=0;i<3;i++) {
+   	   	   x[i] -= deltaTime * 0.2;
+   	   	   while(x[i] < 0){
+   	   	   	   x[i] += 1000 + randInt(-100, 100);
+   	   	   }
    	   }
+   	   
 	}
 	
+	private static int randInt(int min, int max) {
+		Random rand = new Random();
+		return rand.nextInt((max - min) + 1) + min;
+	}
+	
+	private static int log(long x, int base) {
+		return (int) (Math.log(x) / Math.log(base));
+	}
 	
 	protected void render(Graphics2D g){
 		g.drawString("Score: " + score, 10, 10);
 		g.drawImage(stu, 50, 400, 127, 95, null);
-		g.drawImage(square, x, 400, 100, 100, null);
+		for (int i=0;i<3;i++) {
+			g.drawImage(square, x[i], 450, 50, 50, null);
+		}
 		g.drawLine(0, 495, 1000, 495);
 	}
    
