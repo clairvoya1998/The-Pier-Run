@@ -1,7 +1,7 @@
 public class Golf extends Sprite {
 
     private final int BOARD_WIDTH = Pier.WIDTH;
-    private final int Golf_SPEED = 3;
+    private final int Golf_SPEED = 6;
 
     public Golf(int x, int y) {
         super(x, y);
