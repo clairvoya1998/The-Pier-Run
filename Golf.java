@@ -1,7 +1,7 @@
 public class Golf extends Sprite {
 
     private final int BOARD_WIDTH = Pier.WIDTH;
-    private final int Golf_SPEED = 6;
+    private final int Golf_SPEED = 20;
 
     public Golf(int x, int y) {
         super(x, y);
@@ -22,6 +22,12 @@ public class Golf extends Sprite {
         if (x > BOARD_WIDTH) {
             vis = false;
         }
+    }
+    public int getX() {
+    	return x;
+    }
+    public void setX(int newx) {
+    	x = newx;
     }
 
 }
