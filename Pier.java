@@ -72,7 +72,7 @@ public class Pier extends Sprite {
     		y += GRAVITY;
     		y += dy;
 
-    		if(y <= 140) {
+    		if(y <= 100) {
     			dy = 0;
     		}
     		/*for (int i = 0; i < 5; i++) {
