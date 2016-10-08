@@ -18,12 +18,14 @@ public class Pier extends Sprite {
     private int dy;
     private int x;
     private int y;
+    private long rank1;
     private boolean dead = false;
     private ArrayList<Golf> golfs;
     private Image image1, image2, tourist;
-    
+
     public Pier(int x, int y) {
         super(x,y);
+        rank1 = 0;
         initPier();
     }
 
@@ -66,10 +68,10 @@ public class Pier extends Sprite {
     public void drawOn(Graphics2D g2d) {
     	if (!dead) {
     		score++;
-    		
+
     		y += GRAVITY;
     		y += dy;
-        
+
     		if(y <= 140) {
     			dy = 0;
     		}
@@ -91,14 +93,14 @@ public class Pier extends Sprite {
     				}
     			}
     		}
-    		
+
         	for (int i = 0; i < 5; i++) {
         		//if (obx[i] < WIDTH) g2d.drawRect(obx[i], HEIGHT/2-50, 50, 50);
         		if (obx[i] < WIDTH) g2d.drawImage(this.tourist, obx[i], HEIGHT/2 - HEIGHT/6, null);
         	}
         	g2d.drawLine(0, HEIGHT/2, WIDTH, HEIGHT/2);
         	y = Math.min(y,YPOS);
-        	
+
         	g2d.drawString("Score: " + score, 10, 10);
         	g2d.drawImage((((score%14) < 7)?this.image1:this.image2), this.x, this.y, null);
         	dead = cDetect();
@@ -107,19 +109,32 @@ public class Pier extends Sprite {
     }
 
     private void gameOver(Graphics2D g, long score) {
-		Font gameOverFont = new Font("Sans-Serif",1,70);
+    updateTable(score);
+    long rankone=rank1-1;
+
+  	Font gameOverFont = new Font("Sans-Serif",1,70);
 		g.setFont(gameOverFont);
 		g.drawString("GAME OVER", 150, 100);
 		Font scoreFont = new Font("Sans-Serif",1,40);
 		g.setFont(scoreFont);
 		score-=1;
 		g.drawString("Your score was: "+score, 160, 200);
+    g.drawString("The highscore is: "+rankone, 150,270);
 		Font optionsFont = new Font("Sans-Serif",1,20);
 		g.setFont(optionsFont);
-		g.drawString("Do you want to play again? Y/N", 210, 270);
+		g.drawString("Do you want to play again? Y/N", 210, 340);
 
 	}
 
+  public long updateTable(long score){
+
+    if(score>rank1){
+      rank1=score;
+    }
+
+    return rank1;
+
+  }
 
     public void keyPressed(KeyEvent e) {
 
