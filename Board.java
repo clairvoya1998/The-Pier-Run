@@ -26,7 +26,7 @@ public class Board extends JPanel implements ActionListener {
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.WHITE);
-        pier = new Pier();
+        pier = new Pier(40,260);
         timer = new Timer(DELAY, this);
         timer.start();
     }

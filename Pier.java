@@ -7,42 +7,35 @@ import java.util.Random;
 import java.lang.Math;
 import java.awt.Font;
 
-public class Pier {
+public class Pier extends Sprite{
     private final float GRAVITY = 9f;
-    
+
     private int dy;
     private int x;
     private int y;
     private boolean dead = false;
     private Image image1, image2;
-    
-    public Pier() {
+
+    public Pier(int x,int y) {
+      super(x,y);
 
         initPier();
     }
-    
+
     private void initPier() {
 
         ImageIcon i1 = new ImageIcon("main_small.png");
-        image1 = i1.getImage().getScaledInstance(58, 63, Image.SCALE_DEFAULT);
+        image1 = i1.getImage();
         ImageIcon i2 = new ImageIcon("run.png");
-        image2 = i2.getImage().getScaledInstance(58, 63, Image.SCALE_DEFAULT);
-        x = 40;
-        y = 260;
+        image2 = i2.getImage();
     }
-    
-    
+
+
     public void move() {
     	if (y == 260) y += dy;
     }
 
-    public int getX() {
-        return x;
-    }
 
-    public int getY() {
-        return y;
-    }
     private static int randInt(int min, int max) {
         Random rand = new Random();
         return rand.nextInt((max - min) + 1) + min;
@@ -60,10 +53,10 @@ public class Pier {
     public void drawOn(Graphics2D g2d) {
     	if (!dead) {
     		score++;
-    	
+
     		y += GRAVITY;
     		y += dy;
-        
+
     		if(y <= 140) {
     			dy = 0;
     		}
@@ -81,14 +74,14 @@ public class Pier {
         	}
         	g2d.drawLine(0, 320, 1000, 320);
         	y = Math.min(y,260);
-        	
+
         	g2d.drawString("Score: " + score, 10, 10);
         	g2d.drawImage((((score%14) < 7)?this.image1:this.image2), this.x, this.y, null);
         	dead = cDetect();
         } else
 			gameOver(g2d, score);
     }
-    
+
     private void gameOver(Graphics2D g, long score) {
 		Font gameOverFont = new Font("Sans-Serif",1,70);
 		g.setFont(gameOverFont);
@@ -100,10 +93,10 @@ public class Pier {
 		Font optionsFont = new Font("Sans-Serif",1,20);
 		g.setFont(optionsFont);
 		g.drawString("Do you want to play again? Y/N", 210, 270);
-		
+
 	}
-    
-	
+
+
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
