@@ -8,17 +8,18 @@ import java.lang.Math;
 
 public class Pier {
     private final float GRAVITY = 9f;
-
+    
     private int dy;
     private int x;
     private int y;
+    private int dead = false;
     private Image image;
-
+    
     public Pier() {
 
         initPier();
     }
-
+    
     private void initPier() {
 
         ImageIcon ii = new ImageIcon("main_small.png");
@@ -26,8 +27,8 @@ public class Pier {
         x = 40;
         y = 260;
     }
-
-
+    
+    
     public void move() {
     	if (y == 260) y += dy;
     }
@@ -39,7 +40,7 @@ public class Pier {
     public int getY() {
         return y;
     }
-
+    
     public Image getImage() { 
         return image;
     }
@@ -50,10 +51,18 @@ public class Pier {
     private int[] obx = {
         1200, 1600, 2000, 2400, 2800
     };
+    private boolean cDetect() {
+    	for (int i = 0; i < 5; i++) {
+    		if (obx[i] - this.x < 60 && this.y > 240) return true;
+    	}
+    	return false;
+    }
+    private int score = 0;
     public void drawOn(Graphics2D g2d) {
+    	score++;
         y += GRAVITY;
         y += dy;
-
+        
         if(y <= 140) {
           dy = 0;
         }
@@ -62,7 +71,7 @@ public class Pier {
             while (obx[i] < 0) {
                 obx[i] += 1000 + randInt(0, 3000);
                 for (int j = 0; j < 5; j++) {
-                    while (Math.abs(obx[i] - obx[j]) < 200 && i != j) obx[i] += 250;
+                    while (Math.abs(obx[i] - obx[j]) < 200 && i != j) obx[i] += 350;
                 }
             }
         }
@@ -71,10 +80,12 @@ public class Pier {
         }
         g2d.drawLine(0, 320, 1000, 320);
         y = Math.min(y,260);
-
+        
+        g2d.drawString("Score: " + score, 10, 10);
         g2d.drawImage(this.image, this.x, this.y, null);
+        dead = cDetect();
     }
-
+    
     public void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
