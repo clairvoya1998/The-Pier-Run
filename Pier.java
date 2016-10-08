@@ -10,23 +10,31 @@ import java.util.ArrayList;
 
 public class Pier extends Sprite {
     private final float GRAVITY = 9f;
-
+    public static final int WIDTH = 1400;
+    public static final int HEIGHT = 800;
+    public static final int XPOS = WIDTH/10;
+    public static final int YPOS = HEIGHT/2-(int)HEIGHT/8;
+    public static final float RATIO = 63/58;
     private int dy;
     private int x;
     private int y;
     private boolean dead = false;
     private ArrayList<Golf> golfs;
-    private Image image;
-
+    private Image image1, image2;
+    
     public Pier(int x, int y) {
         super(x,y);
         initPier();
     }
 
     private void initPier() {
-      golfs = new ArrayList<>();
-      ImageIcon i1 = new ImageIcon("running.gif");
-      image = i1.getImage();
+		golfs = new ArrayList<>();
+		ImageIcon i1 = new ImageIcon("main_small.png");
+		image1 = i1.getImage().getScaledInstance((int)HEIGHT/8, (int)RATIO*HEIGHT/8, Image.SCALE_DEFAULT);
+		ImageIcon i2 = new ImageIcon("run.png");
+		image2 = i2.getImage().getScaledInstance((int)HEIGHT/8, (int)RATIO*HEIGHT/8, Image.SCALE_DEFAULT);
+		x = XPOS;
+		y = YPOS;
     }
 
 
@@ -35,7 +43,7 @@ public class Pier extends Sprite {
     }
 
     public ArrayList<Golf> getGolfs() {
-      return golfs;
+    	return golfs;
     }
 
 
@@ -44,11 +52,11 @@ public class Pier extends Sprite {
         return rand.nextInt((max - min) + 1) + min;
     }
     private int[] obx = {
-        1200, 1600, 2000, 2400, 2800
+        WIDTH+400, WIDTH+800, WIDTH+1200, WIDTH+1600, WIDTH+2000
     };
     private boolean cDetect() {
     	for (int i = 0; i < 5; i++) {
-    		if (obx[i] - this.x < 60 && this.y > 240) return true;
+    		if (obx[i] - this.x < HEIGHT/8 && obx[i] - this.x > -35 && YPOS - this.y < 10 ) return true;
     	}
     	return false;
     }
@@ -56,30 +64,30 @@ public class Pier extends Sprite {
     public void drawOn(Graphics2D g2d) {
     	if (!dead) {
     		score++;
-
+    		
     		y += GRAVITY;
     		y += dy;
-
+        
     		if(y <= 140) {
     			dy = 0;
     		}
     		for (int i = 0; i < 5; i++) {
     			obx[i] -= 8;
     			while (obx[i] < 0) {
-    				obx[i] += 1000 + randInt(0, 3000);
+    				obx[i] += WIDTH + randInt(0, 3*WIDTH);
     				for (int j = 0; j < 5; j++) {
     					while (Math.abs(obx[i] - obx[j]) < 200 && i != j) obx[i] += 350;
     				}
     			}
     		}
         	for (int i = 0; i < 5; i++) {
-        		if (obx[i] < 1000) g2d.drawRect(obx[i], 270, 50, 50);
+        		if (obx[i] < WIDTH) g2d.drawRect(obx[i], HEIGHT/2-50, 50, 50);
         	}
-        	g2d.drawLine(0, 320, 1000, 320);
-        	y = Math.min(y,260);
-
+        	g2d.drawLine(0, HEIGHT/2, WIDTH, HEIGHT/2);
+        	y = Math.min(y,YPOS);
+        	
         	g2d.drawString("Score: " + score, 10, 10);
-        	g2d.drawImage(this.image, this.x, this.y, null);
+        	g2d.drawImage((((score%14) < 7)?this.image1:this.image2), this.x, this.y, null);
         	dead = cDetect();
         } else
 			gameOver(g2d, score);
@@ -109,7 +117,7 @@ public class Pier extends Sprite {
         }
 
         if (key == KeyEvent.VK_UP) {
-        	if (y == 260) dy = -20;
+        	if (y == YPOS) dy = -HEIGHT/20;
         }
         char character = e.getKeyChar();
         if (character=='y'||character=='Y') {

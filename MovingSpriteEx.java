@@ -12,7 +12,7 @@ public class MovingSpriteEx extends JFrame {
 
         add(new Board());
 
-        setSize(800, 400);
+        setSize(Pier.WIDTH, Pier.HEIGHT);
         setResizable(false);
 
         setTitle("The Pier Run");
