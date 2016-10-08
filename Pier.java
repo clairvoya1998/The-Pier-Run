@@ -113,6 +113,15 @@ public class Pier {
         if (key == KeyEvent.VK_UP) {
         	if (y == 260) dy = -20;
         }
+        char character = e.getKeyChar();
+        if (character=='y'||character=='Y') {
+        	score = 0;
+        	dead = false;
+        	y = 100;
+        }
+        if (character=='n'||character=='N') {
+        		System.exit(0);
+        }
 
     }
     public void keyReleased(KeyEvent e) {
