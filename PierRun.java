@@ -110,13 +110,16 @@ public class PierRun implements Runnable{
 		} catch (IOException e) {
 		}
 	}
-    private int[] x = {1200, 1600, 2000};
+    private int[] x = {1200, 1600, 2000, 2400, 2800};
 	protected void update(int deltaTime){
    	   score++;
-   	   for (int i=0;i<3;i++) {
+   	   for (int i=0;i<5;i++) {
    	   	   x[i] -= deltaTime * 0.2;
    	   	   while(x[i] < 0){
-   	   	   	   x[i] += 1000 + randInt(-100, 100);
+   	   	   	   x[i] += 1000 + randInt(0, 3000);
+   	   	   	   for (int j=0;j<5;j++) {
+   	   	   	   	   while (Math.abs(x[i]-x[j])<200 && i!=j) x[i] += 200;
+   	   	   	   }
    	   	   }
    	   }
    	   
@@ -134,7 +137,7 @@ public class PierRun implements Runnable{
 	protected void render(Graphics2D g){
 		g.drawString("Score: " + score, 10, 10);
 		g.drawImage(stu, 50, 400, 127, 95, null);
-		for (int i=0;i<3;i++) {
+		for (int i=0;i<5;i++) {
 			g.drawImage(square, x[i], 450, 50, 50, null);
 		}
 		g.drawLine(0, 495, 1000, 495);
