@@ -14,7 +14,7 @@ public class Pier {
     private int x;
     private int y;
     private boolean dead = false;
-    private Image image;
+    private Image image1, image2;
     
     public Pier() {
 
@@ -23,8 +23,10 @@ public class Pier {
     
     private void initPier() {
 
-        ImageIcon ii = new ImageIcon("main_small.png");
-        image = ii.getImage().getScaledInstance(58, 63, Image.SCALE_DEFAULT);
+        ImageIcon i1 = new ImageIcon("main_small.png");
+        image1 = i1.getImage().getScaledInstance(58, 63, Image.SCALE_DEFAULT);
+        ImageIcon i2 = new ImageIcon("run.png");
+        image2 = i2.getImage().getScaledInstance(58, 63, Image.SCALE_DEFAULT);
         x = 40;
         y = 260;
     }
@@ -40,10 +42,6 @@ public class Pier {
 
     public int getY() {
         return y;
-    }
-    
-    public Image getImage() { 
-        return image;
     }
     private static int randInt(int min, int max) {
         Random rand = new Random();
@@ -83,9 +81,9 @@ public class Pier {
         	}
         	g2d.drawLine(0, 320, 1000, 320);
         	y = Math.min(y,260);
-        
+        	
         	g2d.drawString("Score: " + score, 10, 10);
-        	g2d.drawImage(this.image, this.x, this.y, null);
+        	g2d.drawImage((((score%14) < 7)?this.image1:this.image2), this.x, this.y, null);
         	dead = cDetect();
         } else
 			gameOver(g2d, score);
@@ -114,12 +112,12 @@ public class Pier {
         	if (y == 260) dy = -20;
         }
         char character = e.getKeyChar();
-        if (character=='y'||character=='Y') {
+        if ((character=='y'||character=='Y') && dead) {
         	score = 0;
         	dead = false;
         	y = 100;
         }
-        if (character=='n'||character=='N') {
+        if ((character=='n'||character=='N') && dead) {
         		System.exit(0);
         }
 
