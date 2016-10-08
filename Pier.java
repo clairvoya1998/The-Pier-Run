@@ -23,7 +23,7 @@ public class Pier {
 
 
     public void move() {
-        y += dy;
+        if (y == 260) y += dy;
     }
 
     public int getX() {
@@ -43,11 +43,7 @@ public class Pier {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_UP) {
-            dy = -5;
-        }
-
-        if (key == KeyEvent.VK_DOWN) {
-            dy = 1;
+            if (y == 260)dy = -80;
         }
     }
     public void keyReleased(KeyEvent e) {
@@ -56,11 +52,10 @@ public class Pier {
 
 
         if (key == KeyEvent.VK_UP) {
+            while (y != 260){
+                y = y + 1;
+            }    
             dy = 0;
-        }
-
-        if (key == KeyEvent.VK_DOWN) {
-            dy = -0;
         }
     }
 }
